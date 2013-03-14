@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Github Issues Viewer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      .issues {
+        margin: 0;
+        list-style-type: none;
+      }
+
+      .issues li {
+        padding: 5px;
+      }
+
+      .issues li:nth-child(odd) {
+        background: #eaeaea;
+      }
+
+      .comments {
+        margin: 0;
+        list-style-type: none;
+      }
+
+      .comments li {
+        padding: 5px;
+      }
+
+      .comments li:nth-child(odd) {
+        background: #eaeaea;
+      }
+    </style>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/handlebars.js"></script>
+    <script src="js/underscore.min.js"></script>
+    <script src="js/backbone.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/showdown.js"></script>
+    <script src="js/app.js"></script>
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <h2>Backbone Issue Viewer</h2>
+
+      <hr>
+
+      <div id="content"></div>
+
+      <hr>
+
+      <div class="footer">
+        <p>&copy; Tim Walling 2013</p>
+      </div>
+
+    </div>
+
+    <script type="text/template" id="issue-item-renderer">
+      <div class="row">
+        <div class="span12">
+          <h4><a href="#" data-id="{{id}}">{{title}}</a></h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span12">
+          <p>{{preview body}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span12">
+          <p>
+            <i class="icon-file"></i> #{{number}} 
+            | <i class="icon-user"></i> <a href="{{user.html_url}}" target="_blank">{{user.login}}</a> 
+            | <i class="icon-tags"></i> Labels:{{#each labels}} <span class="label label-info">{{this.name}}</span>{{/each}}
+          </p>
+        </div>
+      </div>
+    </script>
+
+    <script type="text/template" id="comment-item-renderer">
+      <div class="row">
+        <div class="span2">
+          <p>
+            <img src="{{user.avatar_url}}" height="48" class="img-rounded"/><br/>
+            <a href="{{user.html_url}}" target="_blank">{{user.login}}</a>
+          </p>
+        </div>
+        <div class="span7">
+          <p>{{{markdown body}}}</p>
+        </div>
+      </div>
+    </script>
+
+    <script type="text/template" id="issues-view">
+      <ul class="pager">
+        <li id="prevButton" class="disabled"><a href="#">Previous</a></li>
+        <li id="nextButton" class="disabled"><a href="#">Next</a></li>
+      </ul>
+      <div id="results"></div>
+    </script>
+
+    <script type="text/template" id="issue-view">
+      <button id="backButton" class="btn" type="button">Back to Issues</button>
+      <div class="row">
+        <div class="span12">
+          <h4><strong>{{title}}</strong></h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span2">
+          <p>
+            Author:<br/>
+            <img src="{{user.avatar_url}}" height="48" class="img-rounded"/><br/>
+            <a href="{{user.html_url}}" target="_blank">{{user.login}}</a>
+          </p>
+          <p>
+            Issue:<br/>
+            #{{number}}
+          </p>
+          <p>
+            State:<br/>
+            {{state}}
+          </p>
+          <p>
+            Labels:<br/>
+            {{#each labels}} <span class="label label-info">{{this.name}}</span>{{/each}}
+          </p>
+        </div>
+        <div class="span10">
+          <p>{{{markdown body}}}</p>
+          <hr>
+          <p><strong>Comments:</strong></p>
+          <div class="comments"></div>
+        </div>
+      </div>
+    </script>
+
+  </body>
+</html>
