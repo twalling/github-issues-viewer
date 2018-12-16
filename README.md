@@ -4,7 +4,7 @@ Github issues viewer written in Backbone.js.
 
 # Demo
 
-[http://secure-river-6955.herokuapp.com](http://secure-river-6955.herokuapp.com)
+No longer up
 
 # Setup
 
